@@ -1,0 +1,47 @@
+<html>
+<head><title>hello</title></head>
+<script src="https://skyway.io/dist/0.3/peer.min.js"></script>
+<script type="text/javascript">
+var peer = new Peer({
+	host: "localhost",
+	port: 8909 || (location.protocol === 'https:' ? 443 : 80),
+	path: '/peerjs',
+	config: { 'iceServers': [
+            	{ 'url': 'stun:stun.l.google.com:19302' }  
+         	] }
+});
+peer.on('open', function(id) {
+  console.log('My peer ID is: ' + id);
+});
+peer.on('connection', function(con){
+	alert(con);
+	// con.on("open", function(){
+	// 	alert("client2");
+	// 	con.on("data", function(data){
+	// 		document.getElementById("data").value=data;
+	// 		alert(data);
+	// 	});
+	// });
+	con.send('hi client1');
+	con.close();
+});
+var conn;
+// function connection(){
+// 	conn = peer.connect(document.getElementById("client2").value);
+// }
+// peer.on('data', function(data){
+// 	alert(data);
+// });
+// var conn = peer.connect("helloworld")
+// conn.on('data', function(data) {
+// 	// data === 'hello'
+// 	consol.log("data recieved :" + data);
+
+// })
+</script>
+<body>
+	<input type="text" id="client2">
+	<input type="text" id="data">
+	<button onclick="connection()">send data</button>
+</body>
+</html>
